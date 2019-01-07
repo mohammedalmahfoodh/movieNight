@@ -49,7 +49,7 @@ public class UserController {
 
     }
     @RequestMapping(method = RequestMethod.GET, value = "/user/createmovieevent")
-    public Map<String, String>   createMovieEvent() {
+    public ResponseEntity<String> createMovieEvent() {
 
       return   userService.createMovieEvent();
     }

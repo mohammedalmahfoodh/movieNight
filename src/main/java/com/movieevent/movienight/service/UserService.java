@@ -128,21 +128,9 @@ public class UserService {
         return eventValidity;
     }
 
-    public Map<String, String> createMovieEvent() {
-        HashMap<String, String> eventCreated = new HashMap<>();
-        for (User userLoggedIn : allUsersLoggedIn()) {
-
-            User userInMongoDB = getUserByEmail(userLoggedIn.getEmail());
-            //   userInMongoDB.addEvent(userMovieEvent);
-            //    userRepository.delete(userLoggedIn);
-            //   userRepository.save(userInMongoDB);
-         /*   System.out.println("####################################");
-            System.out.println(userMovieEvent.getStartEvent());
-            System.out.println(userMovieEvent.getEndEvent());
-            System.out.println(userMovieEvent.getName());*/
-        }
-        eventCreated.put("createdState", "ok");
-        return eventCreated;
+    public ResponseEntity<String> createMovieEvent() {
+        System.out.println("Test Create Movie");
+        return new ResponseEntity<>("Movie created successfully", HttpStatus.OK);
     }
 
 
