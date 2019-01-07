@@ -10,7 +10,7 @@ public class MyErrorController implements ErrorController {
 
     public String handleError() {
 
-        //do something like logging
+       
 
         return "/error";
     }
