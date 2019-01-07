@@ -1,0 +1,151 @@
+<ng-container *ngIf="users.length==0"  class="mb-4" >
+ <h3 class="text-danger"  >No users yet ..</h3>
+ <h6 class="text-danger">You have to login to book movie night</h6>
+</ng-container  >
+             
+            <ng-container *ngFor="let user of users">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h4>{{user.email}} events and free time</h4>
+                            </mat-panel-title>
+                            <mat-panel-description>
+                              <h6> Click to see user's events   </h6>  
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="d-flex flex-row">
+                            
+                                <div class="p-2"><h4 >Event Name</h4></div>
+                                <div class="p-2 ml-5"><h4 >Starting Date Event</h4></div>
+                                <div class="p-2 ml-5"><h4 >Ending Date Event</h4></div>
+                                <div class="p-2 ml-5"><h4 >Free Time Available</h4></div>
+                              </div>
+                        <div class="d-flex flex-row">
+
+                            <div class="p-2"><h6 *ngFor="let eventName of user.userEvents">{{eventName.name}}</h6></div>
+                            <div class="p-2 offset-sm-1"><h6 class="text-danger" *ngFor="let eventName of user.userEvents">{{eventName.startEvent}}</h6></div>
+                            <div class="p-2 offset-sm-1"><h6 class="text-danger" *ngFor="let eventName of user.userEvents">{{eventName.endEvent}}</h6></div>
+                            <div class="p-2 offset-sm-1"><h6 class="text-success" *ngFor="let freeDate of user.freeTime">{{freeDate}}</h6></div>
+                          </div>
+                                               
+                        
+                        
+                        
+
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <div *ngIf="(i+1)%2==0" class="w-100"></div>
+            </ng-container>
+      
+
+
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col-4">
+            <div class="row">
+                <h6>Choose the time according to other users' available time</h6>
+                <button class="btn" (click)="open()">Choose your preferred time</button>
+                <input type="time" value="{{selectedTime}}" class="mt-3">
+            </div>
+
+         <div class="row mt-3" id="createEvent">
+                <mat-card>
+                        <form  #createEventForm="ngForm">
+                          <mat-form-field>
+                             <input placeholder="choose starting of event above"
+                              name="startevent" class="eventDateInput"
+                              required [(ngModel)]="startEvent"
+                              #startevent="ngModel"
+                              ngModel  
+                              matInput
+                              type="text"
+                            />
+                            <mat-error *ngIf="startevent.invalid">Please choose start event date</mat-error>
+                          </mat-form-field>
+                          <mat-form-field>
+                                <input placeholder="choose end of event above"
+                                 name="endevent" class="ml-2 eventDateInput"
+                                 required [(ngModel)]="endEvent"
+                                 #endevent="ngModel" 
+                                 ngModel  
+                                 matInput
+                                 type="text"
+                               />
+                               <mat-error *ngIf="endevent.invalid">Please choose end event date</mat-error>
+                             </mat-form-field>
+                             <button  (click)="createStartEvent()" [disabled]="!createStartEventState()"
+                             mat-raised-button 
+                             color="primary" 
+                             class="btn btn-primary mt-2"
+                             type="button"
+                           >
+                             Choose start event
+                           </button>
+                           <button  (click)="createEndEvent()"
+                             mat-raised-button [disabled]="!createEndEventState()"
+                             color="primary"
+                             class="btn btn-primary mt-2"
+                             type="button"
+                           >
+                             Choose end event
+                           </button>
+                           <div class="row ml-4" id="create" >
+                                <a href="#" class="createButton"   routerLink="/ConfirmationEvent"  >                            
+                                    <button  
+                                      mat-raised-button id="createEvent" (click)="sendToDisplay()"
+                                      color="primary" [disabled]="!createEventState()"
+                                      class="btn btn-primary mt-2 createButton"
+                                      type="button" 
+                                    >
+                                      Create event
+                                    </button>
+                                  </a>
+                           </div>
+                         
+                        </form>
+                      </mat-card>
+                     <h4 *ngIf="!statrtTimeDatevalidity" class="text-danger ml-2" >{{startEventMsg}}</h4>
+                     <h4 *ngIf="!endTimeDatevalidity" class="text-danger ml-2" >{{endEventMsg}}</h4>
+                     <h4 *ngIf="Title==undefined" class="text-danger ml-2" >Please go back to previos page and choose a movie</h4>
+                    </div>
+                    <div *ngIf="createStartEventState()&&statrtTimeDatevalidity" class="row d-flex flex-row mt-2">
+                        <h4 class="ml-2"><i class="fas fa-thumbs-up fa-1x text-success"></i></h4>
+                        <h4 class="text-success ml-2">Start Event :{{startEvent}}</h4>
+                    </div>
+                    <div *ngIf="createEndEventState()&&endTimeDatevalidity" class="row d-flex flex-row mt-2">
+                        <h4 class="ml-2"><i class="fas fa-thumbs-up fa-1x text-success"></i></h4>
+                        <h4 class="text-success ml-2">End Event :{{endEvent}}</h4>
+                    </div>
+
+        </div>
+        <div class="col-4">
+            <h6>Choose according to other users' available date</h6>
+            <button class="btn " (click)="dp.toggle()" (mouseenter)="applyTheme(dp);" [attr.aria-expanded]="dp.isOpen">
+                Choose your preferred Date</button>
+            <input type="text" class="form-control mt-3" #dp="bsDatepicker" #dp="bsDatepicker" bsDatepicker [(ngModel)]="bsValue"
+                [bsConfig]="bsConfig">
+
+        </div>
+
+        <div class="col-4">
+            <h6>More info about the choosen movie</h6>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" [src]="movieReceived.Poster" alt="Card image cap">
+                <div class="card-body container-fluid">
+                    <h5 class="card-title">Title:<span class="ml-5">{{movieReceived.Title}}</span></h5>
+                    <h5 class="card-title">Imdb ID:<span class="ml-5">{{movieReceived.imdbID}}</span></h5>
+                    <h5 class="card-title">Imdb Rating:<span class="ml-5">{{imdbRating}}</span></h5>
+                    <h5 class="card-title">Release Year:<span class="ml-5">{{movieReceived.year}}</span></h5>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<br><br><br>
+<button class="btn btn-dark" (click)="expression" >Test Create Movie</button>

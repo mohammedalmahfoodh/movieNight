@@ -1,0 +1,23 @@
+.btn {
+    padding: 10px 10px;
+    font-size: 25px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: rgb(221, 6, 6);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px rgb(92, 88, 88);
+    width: 80%;
+  }
+  
+  .btn:hover {background-color: #382b2b;
+   color: red;font-weight: bold;font-size: 30px;
+}
+  
+  .btn:active {
+    background-color: #66320f;
+    box-shadow: 0 5px rgb(240, 0, 0);
+    transform: translateY(4px);
+  }

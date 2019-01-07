@@ -1,0 +1,88 @@
+<h4>Here you can bok movie night event</h4>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div class="list-group">
+                <a href="#" id="instructions" class="list-group-item list-group-item-action">Instructions</a>
+
+
+                <a href="#" class="list-group-item list-group-item-action list-group-item-danger">Search for your
+                    favorite movie</a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-danger">Log in with Google
+                    Account</a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-danger">Log in to other users</a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-danger">After completing the
+                    steps go to the next page</a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-danger">Refer to the calendar
+                    of each user </a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-danger">You can specify the
+                    date according to available time </a>
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-danger">
+                        Go to the next page by clicking on the movie card </a>
+            </div>
+        </div>
+        <div class="col-6 text-right">
+            <h4>Search a movie by ID or title</h4>
+            <app-searchmovie (moviesEmmiter)="receiveMovies($event)"></app-searchmovie>
+        </div>
+    </div>
+
+
+
+
+
+  <div class="row mt-4">
+          
+        <div *ngIf="Title!=null" class="col-sm-4 form-group text-right">
+            <a href="#" (click)="sendToDisplay()" routerLink="displayOneMovie">
+                <div class="card " style="width: 10rem;">
+                    <img class="card-img-top" [src]="movieTodisplay.Poster" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Title:</h5><span>{{movieTodisplay.Title}}</span>
+
+                        <a href="#" class="btn btn-danger mr-2">Mor Information
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+    
+        <div class="col-sm-8">
+            <div class="row" id="showmovies">
+                <div class="col container-fluid ">
+                    <div class="row">
+                        <ng-container *ngFor="let movie of movies.search | paginate: { itemsPerPage: 4, currentPage: p }  ;let i=index">
+                            <div class="col ">
+                                <a href="#" (click)="sendFromArray(movie)" routerLink="displayOneMovie">
+                                    <div class="card" style="width: 10rem;">
+                                        <img class="card-img-top" [src]="movie.Poster" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Title:</h5><span>{{movie.Title}}</span>
+        
+                                            <a href="#" class="btn btn-danger">Mor Information
+                                            </a>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div *ngIf="(i+1)%4==0" class="w-100"></div>
+        
+                        </ng-container>
+                        <div id="pagination" class="mt-3 card">
+                            <pagination-controls class="card-item" (pageChange)="p = $event"></pagination-controls>
+                        </div>
+        
+                    </div>
+        
+                </div>
+            </div>
+
+
+        </div>
+  </div>
+    
+
+
+
+   
+</div>

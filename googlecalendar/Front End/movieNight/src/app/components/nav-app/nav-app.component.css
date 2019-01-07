@@ -1,0 +1,10 @@
+.fas{
+    color: rgb(48, 21, 21);
+}
+.container-fluid{
+    width: 100%;
+    background-image: linear-gradient(rgb(88, 5, 33),red);
+}
+h5{
+    color: antiquewhite;
+}

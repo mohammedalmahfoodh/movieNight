@@ -1,0 +1,30 @@
+#searchID{
+  width: 170px;padding: 8px 8px;
+}
+.btn {
+    padding: 10px 15px;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: rgb(14, 1, 1);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px rgb(92, 88, 88);
+    
+  }
+  
+  .btn:hover {background-color: #f10f0f}
+  
+  .btn:active {
+    background-color: #66320f;
+    box-shadow: 0 5px rgb(240, 0, 0);
+    transform: translateY(4px);
+  }
+  button,h5{
+    	font-family:tahoma;
+  }
+  mat-card{
+    background-color:rgb(255, 180, 180);
+  }

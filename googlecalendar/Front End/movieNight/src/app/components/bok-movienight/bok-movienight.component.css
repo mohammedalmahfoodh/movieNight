@@ -1,0 +1,22 @@
+#pagination{
+    font-family: 'Shrikhand', cursive;background-color: rgb(37, 14, 14);font-size: 15px;
+    background:rgb(255, 180, 180);
+    color: aliceblue;
+}
+.card{
+    background: linear-gradient(red,black);
+    color: rgb(156, 151, 151);
+}
+#instructions{
+    background-image: linear-gradient(rgb(88, 5, 33),red);
+    color: antiquewhite;font-weight: bold;
+    text-align: center;
+}
+h4{
+        font-family: 'Bungee Shade', cursive;
+        color: brown;
+        font-weight: bold;
+}
+.list-group{
+    	font-family: 'Taviraj', serif;font-size: 20px;
+}

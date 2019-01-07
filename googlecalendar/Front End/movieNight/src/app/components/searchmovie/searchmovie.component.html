@@ -1,0 +1,81 @@
+<mat-card>
+        <form  #titleForm="ngForm">
+          <mat-form-field>
+            <h5>Enter a movie ID</h5>
+            <input #idInput class="border-bottom   border-dark"
+            (keypress)="resetError()"
+            [(ngModel)]="movieId"
+              name="title"
+              required
+              #titleId="ngModel"
+              ngModel  
+              matInput
+              type="text"
+            />
+            <mat-error *ngIf="titleId.invalid">Please Enter an ID</mat-error>
+            <div *ngIf="error!=null">{{error}}</div>
+          </mat-form-field>
+         
+          <button           
+           (click)="searchIdMovie()"
+            mat-raised-button  id="searchID"        
+            class="btn btn-secondary mt-2"
+            type="button"
+          >
+            Search movie by imdbID
+          </button>
+        </form>
+      </mat-card>
+      <mat-card >
+            <form  #titleForm="ngForm">
+              <mat-form-field>
+                <h5>Enter a movie title</h5>
+                <input class="border-bottom   border-dark"
+                [(ngModel)]="movieTitle"
+                (keypress)="resetError()"
+                  name="title"
+                  required
+                  #title="ngModel"
+                  ngModel  
+                  matInput
+                  type="text"
+                />
+                <mat-error *ngIf="title.invalid">Please Enter a Title</mat-error>
+                <div *ngIf="errorTitle!=null">{{errorTitle}}</div>
+              </mat-form-field>
+             
+              <button 
+              (click)="searchTitleMovie()"
+                mat-raised-button          
+                class="btn btn-secondary mt-2"
+                type="button"
+              >
+                Search movie by title
+              </button>
+            </form>
+
+            <form  #autoCompleteForm="ngForm">
+              <mat-form-field>
+                <h5>Enter first 3 digits</h5>
+                <input class="border-bottom   border-dark"
+                #autocomplete="ngModel"
+                (keyup)="getMoviesNames()"
+               
+                  name="autocomplete"
+                  required
+                  [(ngModel)]="movieName"
+                  ngModel  
+                  matInput
+                  type="text"
+                />
+                <mat-error *ngIf="autocomplete.invalid">Please Enter minimum 3 digits</mat-error>
+                <div *ngIf="moviesLength">{{errorName}}</div>
+              </mat-form-field>
+             
+             
+            </form>
+
+
+          </mat-card>
+          
+      

@@ -1,0 +1,47 @@
+<div class="container" *ngIf="eventDeleted==undefined"  >
+  <div class="row">
+    
+    <div class="col-5 ">
+      <h6>More info about the choosen movie for the event</h6>
+      <div class="card text-center" style="width: 18rem;">
+        <img  class="card-img-top" [src]="confirmedMovie.Poster" alt="Card image cap">
+          <div *ngIf="Title!=undefined" class="card-body container-fluid">
+              <h5 class="card-title">Title:<span class="ml-5">{{confirmedMovie.Title}}</span></h5>
+              <h5 class="card-title">Imdb ID:<span class="ml-5">{{confirmedMovie.imdbID}}</span></h5>
+              <h5 class="card-title">Imdb Rating:<span class="ml-5">{{confirmedMovie.imdbRating}}</span></h5>
+              <h5 class="card-title">Release Year:<span class="ml-5">{{confirmedMovie.year}}</span></h5>
+
+          </div>
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="row  d-flex flex-column align-items-center" *ngIf="eventDeleted==undefined" >
+          <i class="far fa-smile-wink fa-5x text-success "></i>
+        <h2 class="text-success">The Event Created successfully</h2>
+      </div>
+      <h3>Movie event will take place on the following date </h3>
+      <h5 class="text-danger">From : {{newUserEvent.userStartEvent}}</h5>
+      <h5 class="text-danger" >To : {{newUserEvent.userEndEvent}}</h5>
+      <h6>For Users</h6>
+      <h5 *ngFor="let user of users" >{{user.email}}</h5>
+     
+     
+      <div class="row">
+        <button type="button"  class="btn btn-dark" 
+        (click)="deleteEvent()" *ngIf="eventDeleted==undefined" >Cancel The Event</button>
+       </div>
+       
+    </div>
+   
+  </div>
+</div>
+
+<div class="d-flex flex-column align-items-center" *ngIf="eventDeleted!=undefined" >
+    
+    <i class="fas fa-sad-cry fa-5x text-danger"></i>
+         <h2   class="text-danger" >{{eventDeleted.message}}</h2>
+         <button routerLink="/" type="button"  class="btn btn-dark ml-5" >Back to home Page</button>
+
+  
+  
+  </div>
