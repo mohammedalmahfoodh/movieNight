@@ -26,7 +26,6 @@ public class MovieService {
 
         String url = "http://www.omdbapi.com/?i=" + imdbID + "&typy=movie&apikey=22dcb687";
 
-        //Search for movie in db before fetching it from OMDb API
 
         for (Movie movieInDB : movieList) {
 
@@ -38,7 +37,7 @@ public class MovieService {
             }
 
         }
-        System.out.println("movie not founded in database");
+
         Movie movie = new Movie();
 
         RestTemplate restTemplate = new RestTemplate();
@@ -65,7 +64,10 @@ public class MovieService {
 
 
         }
-
+        if (!listMovie.getSearch().isEmpty())
+        for (Movie movie:listMovie.getSearch() ) {
+            movieRepository.save(movie);
+        }
 
         return listMovie;
 
@@ -82,13 +84,10 @@ public class MovieService {
            listMovie= restTemplate.getForObject(url, ListMovie.class);
            for (Movie movie:listMovie.getSearch() ) {
                moviesNames.add(movie.getTitle());
+               movieRepository.save(movie);
            }
        }
-      //  if (listMovie.checkListMovie()) {
 
-       //     throw new ResourceNotFoundException("There is no such movie name Http status cod 404 not found");
-
-      //  }
 
 
         return moviesNames;

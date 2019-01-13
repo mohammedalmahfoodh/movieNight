@@ -31,6 +31,7 @@ export class LocalStorageService {
     localStorage.setItem('users',JSON.stringify({users:users}));
    }
    public addMovieToLocal(movie:Movie):void{
+     localStorage.removeItem('movie')
      localStorage.setItem('movie',JSON.stringify({movie:movie}))
    }
    public getMovieFromLocal():Movie{

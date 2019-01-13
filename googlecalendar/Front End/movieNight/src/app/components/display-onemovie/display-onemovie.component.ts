@@ -8,6 +8,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker/public_api';
 import { HttpMovierequestsService } from 'src/app/services/http-movierequests.service';
 import { User } from 'src/app/models/user';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { httpFactory } from '@angular/http/src/http_module';
 
 
 @Component({
@@ -18,15 +19,16 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class DisplayOnemovieComponent implements OnInit {
    
   panelOpenState = false;
-  userEmail: string = 'mohammedalmahfoodh@gmail.com';
+  
 
   colorTheme = 'theme-red';
   bsConfig: Partial<BsDatepickerConfig>;
   posts = 1;
-  usersUrl: string = 'http://localhost:8080/user/authenticatedusers'
+  usersUrl: string = 'http://localhost:8080/user/userEvents'
   constructor(private dataSharing: DataSharingService, private usersLocalstorage: LocalStorageService,
     private httpService: HttpMovierequestsService, private httpClient: HttpClient,
     private timePicker: AmazingTimePickerService) {
+    
   }
   movieReceived;
   imdbID: string;
@@ -37,14 +39,18 @@ export class DisplayOnemovieComponent implements OnInit {
   ngOnInit() {
     //this.users = this.usersLocalstorage.getUsers()
     this.getAsyncUsers()
-    this.dataSharing.currentMovie.subscribe(movie => this.movieReceived = movie)
-    this.movieReceived=this.movieReceived.title==undefined?this.usersLocalstorage.getMovieFromLocal:this.movieReceived
+    this.dataSharing.currentMovie.subscribe(movie => {
+      this.movieReceived = movie
+      
+    })  
+   
     this.Title = this.movieReceived.title;
     this.imdbID = this.movieReceived.imbdID;
     this.year = this.movieReceived.year;
     this.imdbRating = this.movieReceived.imdbRating;
     this.Poster = this.movieReceived.Poster;
-
+   
+   
   }
   //### get users #####
   users: User[]=[];
@@ -82,11 +88,7 @@ export class DisplayOnemovieComponent implements OnInit {
     setTimeout(() => {
       pop.show();
     });
-  }
-  
-  public getUserEvents() {
-    this.httpService.getUser(this.userEmail).subscribe(user => console.log(user.body))
-  }
+  }  
 
   //####### Create event ###############
   newMovieEvent:UserEvent=new UserEvent();
@@ -155,6 +157,7 @@ startEvent: string = null;
   }
   ///##################
   sendToDisplay() {
+    this.httpService.createMovieEvent().subscribe(res=>console.log(res),error=>console.log(error))
     let confirmedMovie:Movie=new Movie();
       confirmedMovie=this.movieReceived 
 
@@ -171,7 +174,7 @@ startEvent: string = null;
     this.httpService.createMovieEvent().subscribe((res)=>console.log(res),
     (error)=>console.log(error))
       
-   //this.sendToDisplay()
+   this.sendToDisplay()
   }
 
 }

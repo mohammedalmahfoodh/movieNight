@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 public class GoogleAuthController {
 
@@ -23,7 +23,7 @@ public class GoogleAuthController {
         return "ok";
     }
 
-    @RequestMapping("/user/authenticatedusers")
+    @GetMapping("/user/userEvents")
     public List<User> getAuthenticated() {
 
         return googleAuthService.loadUsers();

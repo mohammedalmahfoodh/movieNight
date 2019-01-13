@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin
 @RestController
 public class UserController {
     @Autowired
@@ -29,7 +29,7 @@ public class UserController {
     }
 
 
-    @RequestMapping("/user/{email}")
+    @GetMapping("/user/{email}")
     public User getUserByEmail(@PathVariable String email) {
 
         return userService.getUserByEmail(email);

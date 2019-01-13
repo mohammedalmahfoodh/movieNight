@@ -14,6 +14,16 @@ public class User {
     private List<UserEvent> userEvents;
     private  String accessToken;
     private  String refreshToken;
+
+    public Long getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(Long expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    private  Long expiresAt;
     private  List<String> freeTime;
 
     public List<String> getFreeTime() {

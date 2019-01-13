@@ -18,14 +18,20 @@ export class BokMovienightComponent implements OnInit {
   p: number = 1;
   collection: Movie[] =this.movies.search; 
   public env=env;
-  constructor(private dataSharing:DataSharingService,private movieLocalstorage: LocalStorageService ) { }
+  constructor(private dataSharing:DataSharingService,private movieLocalstorage: LocalStorageService ) {
+    if(this.Title==null){
+      console.log(this.Title)
+      this.movieTodisplay=this.movieLocalstorage.getMovieFromLocal()
+    }
+   }
   
   ngOnInit() {
     this.dataSharing.currentMovie.subscribe(movie => {      
       this.movieTodisplay = movie
       this.Title=this.movieTodisplay.title;
+      
     })
-    this.movieLocalstorage.addMovieToLocal(this.movieTodisplay)
+   
   }
 
   receiveMovies($event){

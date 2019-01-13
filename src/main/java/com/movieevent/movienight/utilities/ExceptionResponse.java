@@ -7,11 +7,6 @@ public class ExceptionResponse {
     private String requestedURI;
 
 
-
-
-
-
-
     public String getErrorMessage() {
 
         return errorMessage;

@@ -1,3 +1,4 @@
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { User } from 'src/app/models/user';
 import { Component, OnInit,EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -13,7 +14,8 @@ import { DataSharingService } from 'src/app/services/data-sharing.service';
 })
 export class SearchmovieComponent implements OnInit {
 
-  constructor(private httpService:HttpMovierequestsService,private dataSharing:DataSharingService) { }
+  constructor(private httpService:HttpMovierequestsService,private localS:LocalStorageService,
+    private dataSharing:DataSharingService) { }
   movie;
   movies:Movies;
   error:string=null;
@@ -30,7 +32,7 @@ export class SearchmovieComponent implements OnInit {
         console.log(this.movie)
         this.sendToDisplay();
       },(error:any)=>{
-        this.error=`Error ${error.status}: that means there is error in server because you entered wrong pattern of ID`;
+        this.error=`Error : that means there is error in server because you entered wrong pattern of ID`;
         console.log(this.error)
       })
        //console.log(searchForm.controls.title)
@@ -55,6 +57,7 @@ export class SearchmovieComponent implements OnInit {
  //########## send movie to displayOne page #########
  sendToDisplay(){
   this.dataSharing.changeMovie(this.movie)    
+  
  }
 
 
@@ -62,6 +65,7 @@ export class SearchmovieComponent implements OnInit {
    @Output() moviesEmmiter=new EventEmitter<Movies>();
    sendMovies(){
      this.moviesEmmiter.emit(this.movies);
+    
    } 
 
    

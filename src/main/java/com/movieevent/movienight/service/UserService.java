@@ -66,6 +66,8 @@ public class UserService {
     }
 
     public Map<String, String> cheackStartBookingValidity(String timeDate) {
+        List<User> users = userRepository.findAll();
+        System.out.println(users.get(0).getEmail());
         String eventTime = timeDate.replaceAll("t", " ");
         HashMap<String, String> eventValidity = new HashMap<>();
         for (User userLoggedIn : allUsersLoggedIn()) {
@@ -113,7 +115,7 @@ public class UserService {
                 }
 
                 if (newTimeEvent.isAfter(startTimeEvent) && newTimeEvent.isBefore(endTimeEvent)) {
-                    // System.out.println(newTimeEvent);
+
                     eventValidity.put("timevalidity", " not valid time, it will be during an existing event  " + userEvent.getName());
                     return eventValidity;
                 }
@@ -124,26 +126,31 @@ public class UserService {
         userMovieEvent.setName("movie event");
 
         eventValidity.put("timevalidity", "valid");
-        creatGoogleEvent(userMovieEvent);
+
         return eventValidity;
     }
 
+
     public ResponseEntity<String> createMovieEvent() {
-        System.out.println("Test Create Movie");
-        return new ResponseEntity<>("Movie created successfully", HttpStatus.OK);
+        if (userMovieEvent.getStartEvent() == null && userMovieEvent.getEndEvent() == null) {
+
+            return new ResponseEntity<>("No start time and end time of an event provided", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(creatGoogleEvent(userMovieEvent), HttpStatus.OK);
     }
 
 
     private List<User> allUsersLoggedIn() {
         List<User> usersLoggedIn = new ArrayList<>();
-        for (String email : saveGoogleAuthService.getUsersLogedIn()) {
-            usersLoggedIn.add(userRepository.findByEmail(email));
-        }
+        usersLoggedIn = userRepository.findAll();
 
         return usersLoggedIn;
     }
 
     public void addFreeTime(User user) {
+
+        user.getFreeTime().clear();
 
         List<UserEvent> events = user.getUserEvents();
         int nextEvent = 1;
@@ -182,7 +189,7 @@ public class UserService {
     }
 
     //########## Create Google Event #####################3
-    public void creatGoogleEvent(UserEvent userEvent) {
+    public String creatGoogleEvent(UserEvent userEvent) {
 
         String startEvent2 = userEvent.getStartEvent();
         String startEvent = startEvent2.replaceAll("\\s", "T");
@@ -230,9 +237,9 @@ public class UserService {
 
         //#### insert the event for all users logged in
 
-        for (String email : saveGoogleAuthService.getUsersLogedIn()) {
+        for (User userLoggedIn : allUsersLoggedIn()) {
 
-            User userToInsertNewEvent = userRepository.findByEmail(email);
+            User userToInsertNewEvent = userRepository.findByEmail(userLoggedIn.getEmail());
 
             GoogleCredential credential = new GoogleCredential().setAccessToken(userToInsertNewEvent.getAccessToken());
 
@@ -258,16 +265,16 @@ public class UserService {
 
         }
 
-
+        return "ok";
     }
 
     public Map<String, String> deleteGoogleEvent() {
         HashMap<String, String> deleteEvent = new HashMap<>();
-        for (String email : saveGoogleAuthService.getUsersLogedIn()) {
+        for (User userLoggedIn : allUsersLoggedIn()) {
             User user;
 
-            user = userRepository.findByEmail(email);
-            User userToDeleteEvent = userRepository.findByEmail(email);
+            user = userRepository.findByEmail(userLoggedIn.getEmail());
+            User userToDeleteEvent = userRepository.findByEmail(userLoggedIn.getEmail());
             userRepository.delete(user);
             GoogleCredential credential = new GoogleCredential().setAccessToken(userToDeleteEvent.getAccessToken());
 
